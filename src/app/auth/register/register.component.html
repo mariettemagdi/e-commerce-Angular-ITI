@@ -1,0 +1,188 @@
+<div class="hero min-h-screen bg-base-200">
+  <div class="hero-content flex-col lg:flex-row-reverse">
+    <div class="text-center">
+      <h2 class="text-5xl font-bold">Create Account</h2>
+      <p class="py-6">Join Our Community Today</p>
+    </div>
+    <div class="card flex-shrink-0 w-full max-w-sm shadow-3xl bg-base-100">
+      <div class="card-body">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <div class="form-control">
+            <label class="label"
+              ><span class="label-text">Full Name</span></label
+            >
+            <input
+              type="text"
+              formControlName="name"
+              placeholder="Name"
+              class="input input-bordered placeholder-gray-500"
+              [ngClass]="{
+                'border-red-500 bg-red-50 text-red-900': showError('name'),
+                'border-gray-300': !showError('name')
+              }"
+            />
+            @if (showError('name')) {
+            <div class="text-red-500 text-sm- mt-1">Name is required</div>
+            }
+          </div>
+
+          <!--Email-->
+          <div class="form-control">
+            <label class="label"><span class="label-text">Email</span></label>
+            <input
+              type="email"
+              formControlName="email"
+              placeholder="Email"
+              class="input input-bordered placeholder-gray-500"
+              [ngClass]="{
+                'border-red-500 bg-red-50 text-red-900': showError('email'),
+                'border-gray-300': !showError('email')
+              }"
+            />
+
+            @if (showError('email')) {
+            <div class="text-red-500 text-sm mt-1">
+              @if (registerForm.get('email')?.errors?.['required']) {
+              <div>Email is required</div>
+              } @if (registerForm.get('email')?.errors?.['email']) {
+              <div>Please enter a valid email</div>
+              }
+            </div>
+            }
+          </div>
+
+          <!--Password field-->
+          <div class="form-control">
+            <label class="label"
+              ><span class="label-text">Password</span></label
+            >
+            <input
+              type="password"
+              formControlName="password"
+              placeholder="password"
+              class="input input-bordered placeholder-gray-500"
+              [ngClass]="{
+                'border-red-500 bg-red-50 text-red-900': showError('password'),
+                'border-gray-300': !showError('password')
+              }"
+            />
+            @if (showError('password')){
+            <div class="text-red-500 text-sm mt-1">
+              @if (registerForm.get('password')?.errors?.['required']){
+              <div>Password is required</div>
+              } @if (registerForm.get('password')?.errors?.['minlength']) {
+              <div>Password must be at least 6 characters</div>
+              }
+            </div>
+            }
+          </div>
+
+          <!--confirm password-->
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Confirm Password</span>
+            </label>
+            <input
+              type="password"
+              formControlName="confirmPassword"
+              placeholder="Confirm Password"
+              class="input input-bordered placeholder-gray-500"
+              [ngClass]="{
+                'border-red-500 bg-red-50 text-red-900':
+                  showError('confirmPassword'),
+                'border-gray-300': !showError('confirmPassword')
+              }"
+            />
+            @if (showError('confirmPassword') ||
+            registerForm.errors?.['mismatch']){
+            <div class="text-red-500 text-sm- mt-1">
+              @if (registerForm.get('confirmPassword')?.errors?.['required']){
+              <div>Please Confirm Password</div>
+              } @if (registerForm.errors?.['mismatch'] &&
+              registerForm.get('confirmPassword')?.value){
+              <div>Passwords don't match</div>
+              }
+            </div>
+            }
+          </div>
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Gender</span>
+            </label>
+            <select
+              class="select select-bordered w-full"
+              formControlName="gender"
+              [ngClass]="
+                this.registerForm.get('gender')?.value === ''
+                  ? 'text-gray-500'
+                  : 'text-black'
+              "
+            >
+              <option disabled selected value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+            @if (showError('gender')) {
+            <div class="text-error text-sm mt-1">
+              <span>Gender is required</span>
+            </div>
+            }
+          </div>
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Profile Image</span>
+            </label>
+            <input
+              type="file"
+              class="file-input file-input-bordered w-full"
+              (change)="onImageSelected($event)"
+              accept="image/*"
+            />
+            <div class="relative mt-2">
+              @if (imagePreview) {
+              <div class="relative w-24 h-24">
+                <img
+                  [src]="imagePreview"
+                  alt="Preview"
+                  class="rounded-[10px] w-24 h-24 object-cover border border-gray-300 shadow-sm"
+                />
+                <button
+                  type="button"
+                  class="absolute top-[-8px] right-[-8px] bg-white border border-gray-400 rounded-full p-1 text-xs hover:bg-red-100"
+                  (click)="imagePreview = null"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-red-600"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+              }
+            </div>
+          </div>
+
+          <div class="form-control mt-6">
+            <button class="btn btn-primary" type="submit">Register</button>
+          </div>
+        </form>
+        <div class="divider">OR</div>
+        <div class="text-center">
+          <p class="text-sm">
+            Already have an account?
+            <a class="link link-primary" routerLink="/login">Sign in</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,103 @@
+<div class="hero min-h-screen bg-base-200">
+  <div class="hero-content flex-col lg:flex-col gap-8">
+    <!-- Profile Image -->
+    @if (user) {
+    <div class="text-center lg:text-left">
+      <div class="avatar mb-4">
+        <div
+          class="w-48 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2"
+        >
+          <img src="images/avatar.png" alt="Profile Image" />
+        </div>
+      </div>
+    </div>
+
+    <div class="card w-full max-w-md shadow-2xl bg-base-100">
+      <div class="card-body">
+        <h1 class="text-3xl font-bold">Profile Information</h1>
+
+        <div class="space-y-4 mt-4">
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Username</span>
+            </label>
+            <p
+              class="input input-bordered bg-gray-100 text-sm py-2 px-4 rounded"
+            >
+              {{ user.username }}
+            </p>
+          </div>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Email</span>
+            </label>
+            <p
+              class="input input-bordered bg-gray-100 text-sm py-2 px-4 rounded"
+            >
+              {{ user.email }}
+            </p>
+          </div>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Gender</span>
+            </label>
+            <p
+              class="input input-bordered bg-gray-100 text-sm py-2 px-4 rounded"
+            >
+              {{ user.gender || "Not specified" }}
+            </p>
+          </div>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Member Since</span>
+            </label>
+            <p
+              class="input input-bordered bg-gray-100 text-sm py-2 px-4 rounded"
+            >
+              {{ user.createdAt }}
+            </p>
+          </div>
+          <div class="mt-6">
+            <h2 class="text-xl font-semibold mb-2">Orders</h2>
+
+            <div
+              *ngFor="let order of user.orders"
+              class="mb-3 p-3 border rounded-lg bg-gray-50"
+            >
+              <div class="flex justify-between items-center">
+                <div>
+                  <p><strong>Item:</strong> {{ order.item }}</p>
+                  <p><strong>Status:</strong> {{ order.status }}</p>
+                </div>
+
+                @if (order.status === 'pending') {
+                <button
+                  class="btn btn-sm btn-error"
+                  (click)="cancelOrder(order.id)"
+                >
+                  Cancel
+                </button>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-actions justify-end mt-6">
+          <a routerLink="/profile/edit" class="btn btn-primary">
+            Edit Profile
+          </a>
+        </div>
+      </div>
+    </div>
+    } @else {
+    <div class="text-center">
+      <span class="loading loading-spinner loading-lg"></span>
+      <p>Loading profile...</p>
+    </div>
+    }
+  </div>
+</div>

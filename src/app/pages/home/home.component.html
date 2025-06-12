@@ -1,0 +1,68 @@
+<div class="contianer mx-auto px-4 py-8">
+  <section
+    class="relative bg-right bg-cover h-110 rounded-lg mb-10 flex items-center justify-center"
+    style="
+      background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('images/online-banner.jpg');
+    "
+  >
+    <div class="text-center text-white px-4">
+      <h1 class="text-4xl md:text:5xl font-bold mb-4">Welcome to Our Store</h1>
+      <p class="text-xl md:text-2xl">Discover amazing deals and promotions</p>
+    </div>
+  </section>
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">
+      Today's Promotions
+    </h2>
+    @if (promotionalProducts.length === 0){
+    <div class="text-center py-12">
+      <p class="text-gray-500 text-lg">
+        No promotions available at the moment. Check back later!
+      </p>
+    </div>
+    } @if (isLoading){
+    <div class="flex justify-center py-12">
+      <div
+        class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"
+      ></div>
+    </div>
+    } @if (promotionalProducts.length>0 && !isLoading){
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+    >
+      @for (product of promotionalProducts;track product.id){ @if
+      (product.discount){
+      <div
+        class="absolute top-3 right-3 bg- red-500 text-white text-xs font-bold px-3 py-1 rounded full"
+      >
+        -{{ product.discount }}%
+      </div>
+      }
+      <img
+        [src]="product.image"
+        [alt]="product.title"
+        class="w-full h-48 object-cover"
+      />
+      <div class="p-4">
+        <h3 class="text-lg font-semibold text-gray-800 mb-2">
+          {{ product.title }}
+        </h3>
+        <div class="flex items-center mb-2">
+          <span class="text-lg font-bold text-red-600">
+            {{ product.price }} EGP
+          </span>
+          @if (product.originalPrice) {
+          <span class="text-sm text-gray-500 line-through ml-2"
+            >{{ product.originalPrice }} EGP</span
+          >
+          }
+        </div>
+        <p class="text-gray-600 text-sm line-clamp-2">{{ product.details }}</p>
+      </div>
+      }
+    </div>
+
+    }
+  </section>
+</div>

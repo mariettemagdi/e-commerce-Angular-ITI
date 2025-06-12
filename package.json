@@ -6,19 +6,28 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "server": "node server.js",
+    "json-server": "json-server --watch db.json --port 3000"
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^19.2.10",
     "@angular/common": "^19.2.0",
     "@angular/compiler": "^19.2.0",
     "@angular/core": "^19.2.0",
-    "@angular/forms": "^19.2.0",
+    "@angular/forms": "^19.2.14",
     "@angular/platform-browser": "^19.2.0",
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
+    "@tailwindcss/postcss": "^4.1.7",
+    "body-parser": "^2.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "ngx-toastr": "^19.0.0",
+    "postcss": "^8.5.3",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0",
+    "tailwindcss": "^4.1.7",
+    "tslib": "^2.6.2",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
@@ -26,12 +35,20 @@
     "@angular/cli": "^19.2.7",
     "@angular/compiler-cli": "^19.2.0",
     "@types/jasmine": "~5.1.0",
+    "daisyui": "^5.0.35",
     "jasmine-core": "~5.6.0",
+    "json-server": "^0.17.4",
+    "json-server-auth": "^2.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.7.2"
-  }
+    "typescript": "^5.8.3"
+  },
+  "description": "This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.7.",
+  "main": "server.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

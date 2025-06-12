@@ -1,0 +1,46 @@
+{
+  "users": [
+    {
+      "email": "test@test.com",
+      "password": "$2a$10$VvZdmL6vWO5EV8kjQQKknO2eRxu6kWmsqAGUMUc5cBHV4laVORbG.",
+      "username": "test",
+      "gender": "male",
+      "imageUrl": null,
+      "role": "user",
+      "createdAt": "2025-06-12T20:07:14.520Z",
+      "updatedAt": "2025-06-12T20:07:14.520Z",
+      "id": 1
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "title": "Product 1",
+      "price": 19.99,
+      "details": "Product description",
+      "image": "product1.jpg",
+      "promotion": true
+    }
+  ],
+  "orders": [
+    {
+      "id": "1",
+      "userId": 2,
+      "products": [
+        1
+      ],
+      "totalPrice": 19.99,
+      "date": "2023-05-01",
+      "status": "pending"
+    }
+  ],
+  "carts": [
+    {
+      "id": "1",
+      "userId": 2,
+      "products": [
+        1
+      ]
+    }
+  ]
+}
