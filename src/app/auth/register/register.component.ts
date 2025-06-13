@@ -29,7 +29,8 @@ export class RegisterComponent {
     email:['',[Validators.required,Validators.email]],
     password:['',[Validators.required,Validators.minLength(6)]],
     confirmPassword:['',[Validators.required]],
-    gender:['',[Validators.required]]
+    gender:['',[Validators.required]],
+    role:['user',[Validators.required]]
   },{validator: this.passwordMatchValidator})
  }
 
@@ -85,7 +86,7 @@ onSubmit(){
     username: userData.name,
     gender:userData.gender,
     imageUrl:this.imageUrl || null,
-    role:'user',
+    role:userData.role,
     createdAt: new Date(),          
     updatedAt: new Date() 
 

@@ -1,55 +1,41 @@
 import { Component } from '@angular/core';
 import { Product } from '../../models/product.model';
+import { ProductService } from '../../services/product.service';
+import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
 })
 export class HomeComponent {
    promotionalProducts:Product[]=[];
    isLoading:boolean=false;
+   error: string | null = null;
+
+   constructor(private productService:ProductService){}
 
 
-   ngOnInit(): void {
-  // Uncomment the line below to test without API
-  this.isLoading=true
-  setTimeout(()=>{
-    this.promotionalProducts=this.getMockProducts();
-    this.isLoading=false;
-  },800);
+  ngOnInit(): void {
+   this.loadPromotionalProducts();
   }
-  private getMockProducts(): Product[] {
-    return this.promotionalProducts = [
-    {
-      id: 1,
-      title: 'Wireless Headphones',
-      price: 59.99,
-      originalPrice: 89.99,
-      discount: 33,
-      image: 'images/online-banner.jpg',
-      details: 'Noise-cancelling wireless headphones with 20-hour battery life.'
-    },
-    {
-      id: 2,
-      title: 'Smart Watch',
-      price: 129.99,
-      originalPrice: 199.99,
-      discount: 35,
-      image: 'images/online-banner.jpg',
-      details: 'Fitness tracker with heart-rate monitor and sleep analysis.'
-    },
-    {
-      id: 3,
-      title: 'Gaming Mouse',
-      price: 39.99,
-      originalPrice: 59.99,
-      discount: 33,
-      image: 'images/online-banner.jpg',
-      details: 'Ergonomic gaming mouse with customizable buttons.'
-    }
-  ];
+  private loadPromotionalProducts():void {
+     this.isLoading = true;
+     this.error = null;
+
+     this.productService.getPromotionalProducts().subscribe({
+      next:(products)=>{
+        this.promotionalProducts = products;
+        this.isLoading = false;
+      },
+      error:(err)=>{
+        this.error = 'Failed to load products. Please try again later.';
+        this.isLoading = false;
+        console.error('Error loading products:', err);
+      }})
   }
+  
+
 
 calculateDiscount(originalPrice:number,salePrice:number):number{
   return Math.round(((originalPrice - salePrice)/originalPrice)*100)

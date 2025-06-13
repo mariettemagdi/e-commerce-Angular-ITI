@@ -6,4 +6,8 @@ export interface Product{
     originalPrice?:number;
     discount?:number;
     details:string;
+    category: string;
+    isPromotional?: boolean;
+    promoEndDate?: string;
+    stock?: number;
 }

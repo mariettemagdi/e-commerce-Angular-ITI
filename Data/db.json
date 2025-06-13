@@ -10,37 +10,178 @@
       "createdAt": "2025-06-12T20:07:14.520Z",
       "updatedAt": "2025-06-12T20:07:14.520Z",
       "id": 1
+    },
+    {
+      "email": "admin@example.com",
+      "password": "$2a$10$s2UqaJnpGKoIJ0C2OwiFmOEAWqGc3dnAZM2buNPIAU6hQJal.6TbW",
+      "username": "admin",
+      "gender": "male",
+      "imageUrl": null,
+      "role": "admin",
+      "createdAt": "2025-06-13T18:50:05.219Z",
+      "updatedAt": "2025-06-13T18:50:05.219Z",
+      "id": 2
     }
   ],
   "products": [
     {
-      "id": "1",
-      "title": "Product 1",
-      "price": 19.99,
-      "details": "Product description",
-      "image": "product1.jpg",
-      "promotion": true
+      "id": 1,
+      "title": "Wireless Noise-Cancelling Headphones",
+      "price": 89.99,
+      "image": "images/cancel-headphone.jpg",
+      "details": "Premium over-ear headphones with 30-hour battery life and deep bass.",
+      "category": "Electronics",
+      "rating": 4.5,
+      "stock": 50,
+      "brand": "Sony"
+    },
+    {
+      "id": 2,
+      "title": "Smart Fitness Watch",
+      "price": 179.99,
+      "image": "images/smart-watch-fitness-tracker-hand.webp",
+      "details": "Tracks heart rate, sleep, and 10+ workout modes. Water-resistant.",
+      "category": "Wearables",
+      "rating": 4.7,
+      "stock": 30,
+      "brand": "Samsung"
+    },
+    {
+      "id": 3,
+      "title": "Organic Cotton T-Shirt (Pack of 3)",
+      "price": 39.99,
+      "image": "images/cutton-shirts.jpg",
+      "details": "Breathable fabric, unisex fit. Colors: Black, White, Gray.",
+      "category": "Fashion",
+      "rating": 4.3,
+      "stock": 100
+    },
+    {
+      "id": 4,
+      "title": "Stainless Steel Water Bottle",
+      "price": 25,
+      "image": "images/steel-gallon.jpg",
+      "details": "Insulated 24oz bottle, keeps drinks cold for 24 hours.",
+      "category": "Accessories",
+      "rating": 4.8,
+      "stock": 75
+    },
+    {
+      "id": 5,
+      "title": "Wireless Fast Charger",
+      "price": 34.99,
+      "image": "/images/charger.jpg",
+      "details": "Qi-certified charger for phones and earbuds. 15W output.",
+      "category": "Electronics",
+      "rating": 4.2,
+      "stock": 40,
+      "brand": "Anker"
+    },
+    {
+      "id": 6,
+      "title": "Yoga Mat (Non-Slip)",
+      "price": 35.99,
+      "image": "images/yoga-mat.jpg",
+      "details": "Eco-friendly TPE material, includes carrying strap.",
+      "category": "Fitness",
+      "rating": 4.6,
+      "stock": 60
+    },
+    {
+      "id": 7,
+      "title": "Ultra HD 4K Camera",
+      "price": 899.99,
+      "image": "images/4k-camera.jpg",
+      "details": "Professional mirrorless camera with 30.4MP sensor and 4K video.",
+      "category": "Electronics",
+      "rating": 4.9,
+      "stock": 25,
+      "brand": "Sony"
+    },
+    {
+      "id": 8,
+      "title": "Mechanical Keyboard (RGB)",
+      "price": 89.99,
+      "image": "images/keyboard.webp",
+      "details": "Cherry MX switches, customizable RGB lighting, aluminum frame.",
+      "category": "Electronics",
+      "rating": 4.7,
+      "stock": 50,
+      "brand": "Corsair"
+    },
+    {
+      "id": 9,
+      "title": "Denim Jacket (Slim Fit)",
+      "price": 59.99,
+      "image": "images/denem-jacket.jpg",
+      "details": "Stretch denim, distressed finish, available in 3 washes.",
+      "category": "Fashion",
+      "rating": 4.3,
+      "stock": 45,
+      "brand": "Levi's"
+    },
+    {
+      "id": 10,
+      "title": "Running Shoes",
+      "price": 129.99,
+      "image": "images/running-shoes.jpg",
+      "details": "Lightweight foam cushioning, breathable mesh upper.",
+      "category": "Footwear",
+      "rating": 4.6,
+      "stock": 60,
+      "brand": "Nike"
     }
   ],
-  "orders": [
+  "promotionalProducts": [
     {
-      "id": "1",
-      "userId": 2,
-      "products": [
-        1
-      ],
-      "totalPrice": 19.99,
-      "date": "2023-05-01",
-      "status": "pending"
+      "id": 1,
+      "productId": 1,
+      "originalPrice": 89.99,
+      "discount": 33,
+      "promoEndDate": "2024-12-31",
+      "isActive": true
+    },
+    {
+      "id": 2,
+      "productId": 2,
+      "originalPrice": 179.99,
+      "discount": 28,
+      "promoEndDate": "2024-12-15",
+      "isActive": true
+    },
+    {
+      "id": 3,
+      "productId": 3,
+      "originalPrice": 39.99,
+      "discount": 38,
+      "promoEndDate": "2024-11-30",
+      "isActive": true
+    },
+    {
+      "id": 4,
+      "productId": 4,
+      "originalPrice": 25,
+      "discount": 50,
+      "promoEndDate": "2025-01-15",
+      "isActive": true
+    },
+    {
+      "id": 5,
+      "productId": 5,
+      "originalPrice": 34.99,
+      "discount": 43,
+      "promoEndDate": "2024-12-01",
+      "isActive": true
+    },
+    {
+      "id": 6,
+      "productId": 6,
+      "originalPrice": 35.99,
+      "discount": 36,
+      "promoEndDate": "2024-12-20",
+      "isActive": true
     }
   ],
-  "carts": [
-    {
-      "id": "1",
-      "userId": 2,
-      "products": [
-        1
-      ]
-    }
-  ]
+  "orders": [],
+  "carts": []
 }

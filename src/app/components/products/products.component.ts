@@ -3,6 +3,7 @@ import { Product } from '../../models/product.model';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../services/cart.service';
 import { Router } from '@angular/router';
+import { ProductService } from '../../services/product.service';
 @Component({
   selector: 'app-products',
   imports: [FormsModule],
@@ -13,45 +14,30 @@ export class ProductsComponent {
   allProducts: Product[] = [];
   filteredProducts: Product[] = [];
   cartItemsCount:number=0;
+  isLoading = false;
+
   
   //constructor to inject service 
-  constructor(private cartService:CartService,private router: Router){}
+  constructor(private cartService:CartService,private router: Router, private productService:ProductService){}
   ngOnInit():void{
     this.loadProducts();
   }
-  private loadProducts():void{
-    this.allProducts= [
-    {
-      id: 1,
-      title: 'Wireless Headphones',
-      price: 59.99,
-      originalPrice: 89.99,
-      discount: 33,
-      image: 'images/online-banner.jpg',
-      details: 'Noise-cancelling wireless headphones with 20-hour battery life.'
-    },
-    {
-      id: 2,
-      title: 'Smart Watch',
-      price: 129.99,
-      originalPrice: 199.99,
-      discount: 35,
-      image: 'images/online-banner.jpg',
-      details: 'Fitness tracker with heart-rate monitor and sleep analysis.'
-    },
-    {
-      id: 3,
-      title: 'Gaming Mouse',
-      price: 39.99,
-      originalPrice: 59.99,
-      discount: 33,
-      image: 'images/online-banner.jpg',
-      details: 'Ergonomic gaming mouse with customizable buttons.'
-    }
-  ];
-  this.filteredProducts=[...this.allProducts];
-  }
-
+ loadProducts():void{
+    this.isLoading = true;
+    this.productService.getAllProducts().subscribe({
+      next:(products)=>{
+        console.log('Products loaded:', products);
+        this.allProducts=products;
+        this.filteredProducts = [...products];
+        this.isLoading=false;
+        console.log('Merged products:', products);
+      },
+      error: (err)=>{
+        console.error('Failed to load products:', err);
+        this.isLoading = false;
+      }
+    })
+ }
 searchProducts():void{
   if(!this.searchTerm){
     //empty or undefined

@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup,ReactiveFormsModule,Validators} from '@angular/fo
 import { Router,RouterModule  } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +21,7 @@ export class LoginComponent {
     private fb: FormBuilder,
     private router :Router,
     private http: HttpClient,
+    private authService: AuthService
 
   ) {
     this.loginForm = this.fb.group({

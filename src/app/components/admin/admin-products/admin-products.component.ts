@@ -2,44 +2,98 @@ import { Component } from '@angular/core';
 import { Product } from '../../../models/product.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ProductService } from '../../../services/product.service';
+import { catchError, of } from 'rxjs';
+
 @Component({
   selector: 'app-admin-products',
   imports: [CommonModule,FormsModule],
   templateUrl: './admin-products.component.html',
 })
 export class AdminProductsComponent {
-//dummy data 
-products: Product[] = [
-    { id: 1, title: 'T-Shirt', price: 19.99, image: 'images/avatar.png', details: 'Comfortable cotton t-shirt' },
-    { id: 2, title: 'Coffee Mug', price: 9.99, image: '', details: 'Ceramic coffee mug' }
-  ];
-
+products: Product[] = [];
 searchText= '';
 showForm=false;
 isEditing=false;
-newProduct:Product={id: 0, title: '', price: 0, image: '', details: ''}
+isLoading = false;
+error: string | null = null;
+
+newProduct: Product = { 
+    id: 0, 
+    title: '', 
+    price: 0, 
+    image: '', 
+    details: '',
+    category: '',
+    stock: 0
+  };
+
+constructor(private productService: ProductService) {}
+
+ ngOnInit(): void {
+    this.loadProducts();
+  }
+loadProducts():void{
+   this.isLoading = true;
+    this.error = null;
+    this.productService.getAllProducts().pipe(
+      catchError(err => {
+        this.error = 'Failed to load products';
+        console.error(err);
+        return of([]);
+      })
+    ).subscribe(products => {
+      this.products = products;
+      this.isLoading = false;
+    });
+}
 
 get filteredProducts(){
   return this.products.filter(product =>product.title.toLowerCase().includes(this.searchText.toLowerCase()))
 }
  saveProduct() {
   if(this.isEditing){
-    const index=this.products.findIndex(product =>product.id===this.newProduct.id);
-    this.products[index]={...this.newProduct}
+    this.productService.updateProduct(this.newProduct).subscribe({
+        next:()=>{
+          this.loadProducts();
+          this.cancelEdit();
+        },
+        error: (err) => {
+          this.error = 'Failed to update product';
+          console.error(err);
+        }
+    });
   }
   else{
     //save product
-    this.newProduct.id=this.products.length+1;
-    this.products.push({...this.newProduct})
-  }
-  this.showForm = false;
- }
+    this.productService.addProduct(this.newProduct).subscribe({
+        next: () => {
+          this.loadProducts();
+          this.cancelEdit();
+        },
+        error: (err) => {
+          this.error = 'Failed to add product';
+          console.error(err);
+        }
+      });
+    }
+}
 
  cancelEdit(){
   //RESET 
-    this.newProduct = { id: 0, title: '', price: 0, image: '', details: '' };
+ this.newProduct = { 
+      id: 0, 
+      title: '', 
+      price: 0, 
+      image: '', 
+      details: '',
+      category: '',
+      stock: 0
+    };
     this.isEditing = false;
     this.showForm = false;
+    this.error = null;
+
  }
 
  editProduct(product:Product){
@@ -49,8 +103,15 @@ get filteredProducts(){
  }
  deleteProduct(id:number){
   if(confirm("Are you sure dio you want to delete this product?")){
-    this.products=this.products.filter(product=>product.id !== id);
-    this.showForm = false
+    this.productService.deleteProduct(id).subscribe({
+      next:()=>{
+        this.loadProducts();
+      },
+      error:(err)=>{
+        this.error = 'Failed to delete product';
+          console.error(err);
+      }
+    })
   }
  }
 }
