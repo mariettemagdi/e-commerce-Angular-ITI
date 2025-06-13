@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router,NavigationEnd  } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { AuthService } from '../../auth/auth.service';
-import { CommonModule } from '@angular/common';
+import { filter } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink,CommonModule],
+  imports: [RouterLink],
   templateUrl: './header.component.html',
 })
 export class HeaderComponent {
@@ -25,6 +26,13 @@ export class HeaderComponent {
       this.cartItemCount=count;
     })
     this.checkAuthStatus();
+  
+
+     this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.checkAuthStatus();
+    });
   }
 
   checkAuthStatus() : void {

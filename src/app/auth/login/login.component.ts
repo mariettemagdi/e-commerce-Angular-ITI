@@ -46,7 +46,9 @@ export class LoginComponent {
     try{
       const response=await lastValueFrom(this.http.post<{accessToken:string}>('http://localhost:3000/login',{email: this.loginForm.value.email, password: this.loginForm.value.password }));
       localStorage.setItem('token',response.accessToken);
-      this.router.navigate(['/']);
+        this.router.navigate(['/']).then(() => {
+      window.location.reload(); 
+    });
     }catch(error){
         this.errorMessage = 'Invalid email or password';
         console.log(error);

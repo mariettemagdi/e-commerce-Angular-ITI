@@ -11,7 +11,23 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
    isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    if (!token) return false;
+    
+    try {
+     
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const now = Date.now() / 1000;
+      if (payload.exp && payload.exp < now) {
+        this.logout();
+        return false;
+      }
+      return true;
+    } catch (error) {
+      console.error('Invalid token:', error);
+      this.logout();
+      return false;
+    }
   }
 
   getUserRole(): string | null {

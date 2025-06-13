@@ -38,15 +38,14 @@
       <li><a href="/" class="active">Home</a></li>
       <li><a href="/about">About</a></li>
       <li><a href="/products">Products</a></li>
-      @if (isLoggedIn && isAdmin) {
       <li><a href="/admin/products">Manage Products</a></li>
       <li><a href="/admin/orders">Manage Orders</a></li>
-      }
     </ul>
   </div>
 
   <div class="navbar-end">
     <!-- Cart with badge -->
+    @if (isLoggedIn) {
     <div class="indicator mr-4">
       <span class="indicator-item badge badge-primary">{{
         cartItemCount
@@ -68,6 +67,7 @@
         </svg>
       </a>
     </div>
+    }
 
     <!-- User dropdown -->
     <div class="dropdown dropdown-end">
@@ -89,15 +89,16 @@
         tabindex="0"
         class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
       >
+        @if (isLoggedIn) {
         <li>
           <a routerLink="/profile" class="justify-between"> Profile </a>
         </li>
-        <!-- <li><a routerLink="/orders">My Orders</a></li> -->
         <li><a routerLink="/logout" (click)="logout()">Logout</a></li>
+        } @if ( !isLoggedIn) {
+        <li><a routerLink="/login">Login</a></li>
+        <li><a routerLink="/register">Register</a></li>
+        }
       </ul>
     </div>
   </div>
 </div>
-
-<!-- Spacer for fixed navbar -->
-<!-- <div class="h-16"></div> -->
